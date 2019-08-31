@@ -1,46 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:immigration_quebec/main.dart' as prefix1;
 
 
 var finalScore = 0;
 var questionNumber = 0;
-var quiz = new AnimalQuiz();
+var quiz = new QuebecQuiz();
 
-class AnimalQuiz{
+class QuebecQuiz{
   var images = [
-    "alligator", "cat", "dog", "owl",
+    "alligator", "cat", "dog", "owl", "owl"
   ];
 
 
   var questions = [
-    "This animal is a carnivorous reptile.",
+    "economy",
     "_________ like to chase mice and birds.",
     "Give a _________ a bone and he will find his way home",
     "A nocturnal animal with some really big eyes",
+    "A commerce animal with some really big eyes",
   ];
 
 
   var choices = [
-    ["Cat", "Sheep", "Alligator", "Cow"],
+    ["economy", "Sheep", "Alligator", "Cow"],
     ["Cat", "Snail", "Slug", "Horse"],
     ["Mouse", "Dog", "Elephant", "Donkey"],
     ["Spider", "Snake", "Hawk", "Owl"],
+    ["test", "Sheep", "Alligator", "teddst"],
   ];
 
 
   var correctAnswers = [
-    "Alligator", "Cat", "Dog", "Owl",
+    "economy", "Cat", "Dog", "Owl","test"
   ];
 }
 
-class Quiz2 extends StatefulWidget{
+class QubecEconomy extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return new Quiz2State();
+    return new QubecEconomyState();
   }
 }
 
-class Quiz2State extends State<Quiz2> {
+class QubecEconomyState extends State<QubecEconomy> {
   @override
   Widget build(BuildContext context) {
     return new WillPopScope(
@@ -60,7 +61,7 @@ class Quiz2State extends State<Quiz2> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
 
-                      new Text("Question ${questionNumber + 1} of ${quiz.questions.length}",
+                      new Text("Question ${questionNumber + 1} de ${quiz.questions.length}",
                         style: new TextStyle(
                             fontSize: 22.0
                         ),),
@@ -100,10 +101,10 @@ class Quiz2State extends State<Quiz2> {
                       color: Colors.blueGrey,
                       onPressed: (){
                         if(quiz.choices[questionNumber][0] == quiz.correctAnswers[questionNumber]){
-                          debugPrint("Correct");
+                          debugPrint("Juste");
                           finalScore++;
                         }else{
-                          debugPrint("Wrong");
+                          debugPrint("Faux");
                         }
                         updateQuestion();
                       },
@@ -121,10 +122,10 @@ class Quiz2State extends State<Quiz2> {
                       onPressed: (){
 
                         if(quiz.choices[questionNumber][1] == quiz.correctAnswers[questionNumber]){
-                          debugPrint("Correct");
+                          debugPrint("Juste");
                           finalScore++;
                         }else{
-                          debugPrint("Wrong");
+                          debugPrint("Faux");
                         }
                         updateQuestion();
                       },
@@ -151,10 +152,10 @@ class Quiz2State extends State<Quiz2> {
                       onPressed: (){
 
                         if(quiz.choices[questionNumber][2] == quiz.correctAnswers[questionNumber]){
-                          debugPrint("Correct");
+                          debugPrint("Juste");
                           finalScore++;
                         }else{
-                          debugPrint("Wrong");
+                          debugPrint("Faux");
                         }
                         updateQuestion();
                       },
@@ -172,10 +173,10 @@ class Quiz2State extends State<Quiz2> {
                       onPressed: (){
 
                         if(quiz.choices[questionNumber][3] == quiz.correctAnswers[questionNumber]){
-                          debugPrint("Correct");
+                          debugPrint("Juste");
                           finalScore++;
                         }else{
-                          debugPrint("Wrong");
+                          debugPrint("Faux");
                         }
                         updateQuestion();
                       },
@@ -198,7 +199,7 @@ class Quiz2State extends State<Quiz2> {
                         height: 30.0,
                         color: Colors.red,
                         onPressed: resetQuiz,
-                        child: new Text("Quitter Le Quiz 1",
+                        child: new Text("Quit Quebec Economy Quiz",
                           style: new TextStyle(
                               fontSize: 18.0,
                               color: Colors.white
@@ -216,15 +217,16 @@ class Quiz2State extends State<Quiz2> {
         )
     );
   }
+
   void resetQuiz(){
     setState(() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => prefix1.AnimalQuiz()),
-      );      finalScore = 0;
+      Navigator.pop(context);
+      finalScore = 0;
       questionNumber = 0;
     });
   }
+
+
 
   void updateQuestion(){
     setState(() {
@@ -254,7 +256,7 @@ class Summary extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
 
-              new Text("Final Score: $score",
+              new Text("Score Final: $score",
                 style: new TextStyle(
                     fontSize: 35.0
                 ),),
@@ -264,12 +266,11 @@ class Summary extends StatelessWidget{
               new MaterialButton(
                 color: Colors.red,
                 onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => prefix1.AnimalQuiz()),
-                  );
+                  questionNumber = 0;
+                  finalScore = 0;
+                  Navigator.pop(context);
                 },
-                child: new Text("Quitter Le Quiz",
+                child: new Text("Reset Quebec Economy Quiz",
                   style: new TextStyle(
                       fontSize: 20.0,
                       color: Colors.white

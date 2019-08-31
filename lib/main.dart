@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:immigration_quebec/pages/homepage.dart';
-import 'package:immigration_quebec/pages/landing_page.dart';
-import 'package:immigration_quebec/quiz1.dart';
-import 'package:immigration_quebec/quiz2.dart';
+import 'package:immigration_quebec/pages/quiz_page/quiz1.dart';
+import 'package:immigration_quebec/pages/quiz_page/quiz2.dart';
+import 'package:immigration_quebec/pages/youtube_page/youtube_home_page.dart';
 
 void main() => runApp(new MaterialApp(home: HomePage()));
 
@@ -74,7 +73,7 @@ class HomePage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AnimalQuiz()),
+                        MaterialPageRoute(builder: (context) => QuebecQuiz()),
                       );
                     },
                     child: Text("English",
@@ -136,31 +135,19 @@ class ArabicPage extends StatelessWidget {
   }
 }
 
-class quiz extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Open Trivia',
-      theme: ThemeData(fontFamily: 'Poppins'),
-      home: new LandingPage(),
-    );
-  }
-}
-
-class AnimalQuiz extends StatefulWidget {
+class QuebecQuiz extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new AnimalQuizState();
+    return new QuebecEconomy();
   }
 }
 
-class AnimalQuizState extends State<AnimalQuiz> {
+class QuebecEconomy extends State<QuebecQuiz> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Multiple Choice Quiz"),
+        title: new Text("Multiple Choix Quiz"),
         backgroundColor: Colors.blue,
       ),
       body: new Container(
@@ -175,33 +162,39 @@ class AnimalQuizState extends State<AnimalQuiz> {
                 height: 50.0,
                 color: Colors.green,
                 elevation: 8,
-                onPressed: startQuiz,
+                onPressed: startQubecEconomyQuiz,
                 child: new Text(
-                  "Quiz 1",
+                  "Économie du Québec",
                   style: new TextStyle(fontSize: 18.0, color: Colors.white),
                 )),
             new MaterialButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
                 height: 50.0,
-                color: Colors.green,
-                onPressed: startQuiz,
+                color: Colors.blue,
+                elevation: 8,
+                onPressed: startQubecPoliticQuiz,
                 child: new Text(
-                  "Quiz 2",
+                  "Politique du Québec",
                   style: new TextStyle(fontSize: 18.0, color: Colors.white),
-                ))
+                )),
           ],
         ),
       ),
     );
   }
 
-  void startQuiz() {
+  void startQubecEconomyQuiz() {
     setState(() {
       Navigator.push(
-          context, new MaterialPageRoute(builder: (context) => new Quiz2()));
-      Navigator.push(
-          context, new MaterialPageRoute(builder: (context) => new Quiz3()));
+          context, new MaterialPageRoute(builder: (context) => new QubecEconomy()));
     });
   }
+  void startQubecPoliticQuiz() {
+    setState(() {
+      Navigator.push(
+          context, new MaterialPageRoute(builder: (context) => new QubecPolitic()));
+    });
+  }
+
 }

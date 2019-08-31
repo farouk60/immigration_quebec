@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:immigration_quebec/model/City.dart';
+import 'package:immigration_quebec/pages/youtube_page/youtube_playlist.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage2 extends StatelessWidget {

@@ -1,46 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:immigration_quebec/main.dart' as prefix1;
 
 
 var finalScore = 0;
 var questionNumber = 0;
-var quiz = new AnimalQuiz();
+var quiz = new QuebecQuiz();
 
-class AnimalQuiz{
+class QuebecQuiz{
   var images = [
-    "alligator", "cat", "dog", "owl"
+    "alligator", "cat", "dog", "owl","owl"
   ];
 
 
-  var questions2 = [
-    "This animal is a carnivorous reptile.",
+  var questions = [
+    "politic",
     "_________ like to chase mice and birds.",
     "Give a _________ a bone and he will find his way home",
     "A nocturnal animal with some really big eyes",
+    "A commerce animal with some really big eyes",
   ];
 
 
-  var choices2 = [
-    ["farouk", "ascacs", "asc", "asc"],
-    ["Caascact", "Sacacnail", "asc", "asc"],
+  var choices = [
+    ["politic", "Sheep", "Alligator", "Cow"],
+    ["Cat", "Snail", "Slug", "Horse"],
     ["Mouse", "Dog", "Elephant", "Donkey"],
-    ["Spider", "Snake", "Hawk", "Owl"]
+    ["Spider", "Snake", "Hawk", "Owl"],
+    ["politic", "Sheep", "Alligator", "test"],
   ];
 
 
-  var correctAnswers2 = [
-    "Alligator", "Cat", "Dog", "Owl",
+  var correctAnswers = [
+    "economy", "Cat", "Dog", "Owl","politic"
   ];
 }
 
-class Quiz3 extends StatefulWidget{
+class QubecPolitic extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return new Quiz3State();
+    return new QubecPoliticState();
   }
 }
 
-class Quiz3State extends State<Quiz3> {
+class QubecPoliticState extends State<QubecPolitic> {
   @override
   Widget build(BuildContext context) {
     return new WillPopScope(
@@ -60,7 +61,7 @@ class Quiz3State extends State<Quiz3> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
 
-                      new Text("Question ${questionNumber + 1} of ${quiz.questions2.length}",
+                      new Text("Question ${questionNumber + 1} de ${quiz.questions.length}",
                         style: new TextStyle(
                             fontSize: 22.0
                         ),),
@@ -83,7 +84,7 @@ class Quiz3State extends State<Quiz3> {
 
                 new Padding(padding: EdgeInsets.all(10.0)),
 
-                new Text(quiz.questions2[questionNumber],
+                new Text(quiz.questions[questionNumber],
                   style: new TextStyle(
                     fontSize: 20.0,
                   ),),
@@ -99,15 +100,15 @@ class Quiz3State extends State<Quiz3> {
                       minWidth: 120.0,
                       color: Colors.blueGrey,
                       onPressed: (){
-                        if(quiz.choices2[questionNumber][0] == quiz.correctAnswers2[questionNumber]){
-                          debugPrint("Correct");
+                        if(quiz.choices[questionNumber][0] == quiz.correctAnswers[questionNumber]){
+                          debugPrint("Juste");
                           finalScore++;
                         }else{
-                          debugPrint("Wrong");
+                          debugPrint("Faux");
                         }
                         updateQuestion();
                       },
-                      child: new Text(quiz.choices2[questionNumber][0],
+                      child: new Text(quiz.choices[questionNumber][0],
                         style: new TextStyle(
                             fontSize: 20.0,
                             color: Colors.white
@@ -120,15 +121,15 @@ class Quiz3State extends State<Quiz3> {
                       color: Colors.blueGrey,
                       onPressed: (){
 
-                        if(quiz.choices2[questionNumber][1] == quiz.correctAnswers2[questionNumber]){
-                          debugPrint("Correct");
+                        if(quiz.choices[questionNumber][1] == quiz.correctAnswers[questionNumber]){
+                          debugPrint("Juste");
                           finalScore++;
                         }else{
-                          debugPrint("Wrong");
+                          debugPrint("Faux");
                         }
                         updateQuestion();
                       },
-                      child: new Text(quiz.choices2[questionNumber][1],
+                      child: new Text(quiz.choices[questionNumber][1],
                         style: new TextStyle(
                             fontSize: 20.0,
                             color: Colors.white
@@ -150,15 +151,15 @@ class Quiz3State extends State<Quiz3> {
                       color: Colors.blueGrey,
                       onPressed: (){
 
-                        if(quiz.choices2[questionNumber][2] == quiz.correctAnswers2[questionNumber]){
-                          debugPrint("Correct");
+                        if(quiz.choices[questionNumber][2] == quiz.correctAnswers[questionNumber]){
+                          debugPrint("Juste");
                           finalScore++;
                         }else{
-                          debugPrint("Wrong");
+                          debugPrint("Faux");
                         }
                         updateQuestion();
                       },
-                      child: new Text(quiz.choices2[questionNumber][2],
+                      child: new Text(quiz.choices[questionNumber][2],
                         style: new TextStyle(
                             fontSize: 20.0,
                             color: Colors.white
@@ -171,15 +172,15 @@ class Quiz3State extends State<Quiz3> {
                       color: Colors.blueGrey,
                       onPressed: (){
 
-                        if(quiz.choices2[questionNumber][3] == quiz.correctAnswers2[questionNumber]){
-                          debugPrint("Correct");
+                        if(quiz.choices[questionNumber][3] == quiz.correctAnswers[questionNumber]){
+                          debugPrint("Juste");
                           finalScore++;
                         }else{
-                          debugPrint("Wrong");
+                          debugPrint("Faux");
                         }
                         updateQuestion();
                       },
-                      child: new Text(quiz.choices2[questionNumber][3],
+                      child: new Text(quiz.choices[questionNumber][3],
                         style: new TextStyle(
                             fontSize: 20.0,
                             color: Colors.white
@@ -197,8 +198,8 @@ class Quiz3State extends State<Quiz3> {
                         minWidth: 240.0,
                         height: 30.0,
                         color: Colors.red,
-                        onPressed: resetQuiz,
-                        child: new Text("Quitter Le Quiz",
+                        onPressed: resetQuiz2,
+                        child: new Text("Quit Quebec Economy Quiz",
                           style: new TextStyle(
                               fontSize: 18.0,
                               color: Colors.white
@@ -216,20 +217,20 @@ class Quiz3State extends State<Quiz3> {
         )
     );
   }
-  void resetQuiz(){
+
+  void resetQuiz2(){
     setState(() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => prefix1.AnimalQuiz()),
-      );      finalScore = 0;
+      Navigator.pop(context);
+      finalScore = 0;
       questionNumber = 0;
     });
   }
 
 
+
   void updateQuestion(){
     setState(() {
-      if(questionNumber == quiz.questions2.length - 1){
+      if(questionNumber == quiz.questions.length - 1){
         Navigator.push(context, new MaterialPageRoute(builder: (context)=> new Summary(score: finalScore,)));
 
       }else{
@@ -255,7 +256,7 @@ class Summary extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
 
-              new Text("Final Score: $score",
+              new Text("Score Final: $score",
                 style: new TextStyle(
                     fontSize: 35.0
                 ),),
@@ -265,12 +266,11 @@ class Summary extends StatelessWidget{
               new MaterialButton(
                 color: Colors.red,
                 onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => prefix1.AnimalQuiz()),
-                  );
+                  questionNumber = 0;
+                  finalScore = 0;
+                  Navigator.pop(context);
                 },
-                child: new Text("Quitter Le Quiz 2",
+                child: new Text("Reset Quebec Politic Quiz",
                   style: new TextStyle(
                       fontSize: 20.0,
                       color: Colors.white
