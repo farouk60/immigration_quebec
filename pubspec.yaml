@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+
   url_launcher: ^5.1.2
   flutter_linkify: ^2.1.0
   cupertino_icons: ^0.1.2
@@ -22,6 +23,7 @@ dependencies:
   built_value: any
   built_collection: any
   flare_flutter: ^1.5.7
+  dio: ^1.0.13
 
 
 dev_dependencies:

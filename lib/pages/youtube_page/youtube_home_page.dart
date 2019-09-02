@@ -3,7 +3,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:immigration_quebec/pages/youtube_page/youtube_playlist.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HomePage2 extends StatelessWidget {
+class YoutubeVideos extends StatelessWidget {
   final List<City> _allCities = City.allCities();
 
   HomePage2() {}
