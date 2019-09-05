@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:immigration_quebec/pages/company_index_page/company_index_home_page.dart';
 import 'package:immigration_quebec/pages/general_information_page/informations_page.dart';
+import 'package:immigration_quebec/pages/calcul_page/calcul.dart';
 import 'package:immigration_quebec/pages/quiz_page/quiz_home_page.dart';
 import 'package:immigration_quebec/pages/youtube_page/youtube_home_page.dart';
 
@@ -46,6 +46,22 @@ class HomePage extends StatelessWidget {
                       );
                     },
                     child: Text("Documentations",
+                        style: TextStyle(fontSize: 20.0, color: Colors.white)),
+                  ),
+                ),
+                Center(
+                  child: new MaterialButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    splashColor: Colors.green,
+                    color: Colors.green[400],
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Calc()),
+                      );
+                    },
+                    child: Text("Calcul",
                         style: TextStyle(fontSize: 20.0, color: Colors.white)),
                   ),
                 ),
