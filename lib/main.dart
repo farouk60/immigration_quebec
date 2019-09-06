@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:immigration_quebec/pages/general_information_page/informations_page.dart';
-import 'package:immigration_quebec/pages/calcul_page/calcul.dart';
+import 'package:immigration_quebec/pages/quiz_page/copycalc.dart';
 import 'package:immigration_quebec/pages/quiz_page/quiz_home_page.dart';
+import 'package:immigration_quebec/pages/test.dart';
 import 'package:immigration_quebec/pages/youtube_page/youtube_home_page.dart';
 
 void main() => runApp(new MaterialApp(home: HomePage()));
@@ -53,22 +54,6 @@ class HomePage extends StatelessWidget {
                   child: new MaterialButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    splashColor: Colors.green,
-                    color: Colors.green[400],
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Calc()),
-                      );
-                    },
-                    child: Text("Calcul",
-                        style: TextStyle(fontSize: 20.0, color: Colors.white)),
-                  ),
-                ),
-                Center(
-                  child: new MaterialButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
                     splashColor: Colors.red,
                     color: Colors.red[400],
                     onPressed: () {
@@ -86,6 +71,22 @@ class HomePage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     splashColor: Colors.red,
+                    color: Colors.pink[400],
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Calcul()),
+                      );
+                    },
+                    child: Text("Calcul",
+                        style: TextStyle(fontSize: 20.0, color: Colors.white)),
+                  ),
+                ),
+                Center(
+                  child: new MaterialButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    splashColor: Colors.red,
                     color: Colors.blue[400],
                     onPressed: () {
                       Navigator.push(
@@ -94,6 +95,22 @@ class HomePage extends StatelessWidget {
                       );
                     },
                     child: Text("Videos",
+                        style: TextStyle(fontSize: 20.0, color: Colors.white)),
+                  ),
+                ),
+                Center(
+                  child: new MaterialButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    splashColor: Colors.red,
+                    color: Colors.blue[400],
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Calcul2()),
+                      );
+                    },
+                    child: Text("Calculator",
                         style: TextStyle(fontSize: 20.0, color: Colors.white)),
                   ),
                 ),
