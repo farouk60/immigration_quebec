@@ -3,6 +3,9 @@ import 'package:immigration_quebec/pages/general_information_page/informations_p
 import 'package:immigration_quebec/pages/quiz_page/copycalc.dart';
 import 'package:immigration_quebec/pages/quiz_page/quiz_home_page.dart';
 import 'package:immigration_quebec/pages/test.dart';
+import 'package:immigration_quebec/pages/youtube_page/homepagepiker.dart';
+import 'package:immigration_quebec/pages/youtube_page/test2.dart';
+import 'package:immigration_quebec/pages/youtube_page/test3.dart';
 import 'package:immigration_quebec/pages/youtube_page/youtube_home_page.dart';
 
 void main() => runApp(new MaterialApp(home: HomePage()));
@@ -107,7 +110,7 @@ class HomePage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Calcul2()),
+                        MaterialPageRoute(builder: (context) => ExampleApp2()),
                       );
                     },
                     child: Text("Calculator",

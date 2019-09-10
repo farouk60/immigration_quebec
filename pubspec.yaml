@@ -29,6 +29,11 @@ dependencies:
   bloc: ^0.15.0
   gradient_widgets: ^0.5.0
   math_expressions: ^1.1.1
+  json_annotation: ^0.2.3
+  fluro: ^1.1.0
+  timeago: ^1.2.0
+  infinite_listview: ^1.0.0
+  numberpicker: ^1.1.0
 
 
 dev_dependencies:
