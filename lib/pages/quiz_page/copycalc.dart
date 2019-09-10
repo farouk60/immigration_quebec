@@ -9,75 +9,71 @@ class Calcul extends StatefulWidget {
 }
 
 class CalculState extends State<Calcul> {
-  final TextEditingController _ageController = new TextEditingController();
-  final TextEditingController _weightController = new TextEditingController();
-  final TextEditingController _heightController = new TextEditingController();
-  double _meter = 0;
-  double _result = 0;
-  String _finalResultPrint = "";
-  String _doneResult = "";
-  bool _isChecked = true;
-  void _clear() {
-    setState(() {
-      _ageController.clear();
-      _weightController.clear();
-      _heightController.clear();
-    });
-  }
-
-  void _bmiValue() {
-    setState(() {
-      double age = double.parse(_ageController.text);
-      double weight = double.parse(_weightController.text);
-      double height = double.parse(_heightController.text);
-      _meter = height + weight + age;
-
-      if ((_ageController.text.isNotEmpty || age > 0) &&
-          ((_heightController.text.isNotEmpty || height > 0) &&
-              (_weightController.text.isNotEmpty || weight > 0))) {
-        _result = _meter;
-      } else {
-        print("Error");
-      }
-
-      if ((double.parse(_result.toStringAsFixed(1)) < 18.5)) {
-        _finalResultPrint = "UnderWeight";
-        print(_finalResultPrint);
-      } else if (double.parse(_result.toStringAsFixed(1)) > 18.5 &&
-          (double.parse(_result.toStringAsFixed(1)) <= 25.0)) {
-        _finalResultPrint = "Normal";
-        print(_finalResultPrint);
-      } else if ((double.parse(_result.toStringAsFixed(1)) > 25.0) &&
-          (double.parse(_result.toStringAsFixed(1))) < 30.0) {
-        _finalResultPrint = "OverWeight";
-        print(_finalResultPrint);
-      } else if ((double.parse(_result.toStringAsFixed(1))) >= 30.0) {
-        _finalResultPrint = "Obesity";
-        print(_finalResultPrint);
-      }
-    });
-
-    _doneResult = "Your BMI is ${_result.toStringAsFixed(1)}";
-  }
+  int _age1 = 22, _age2 = 32, _totalAge = 0;
+  bool _checkedAge1 = false, _checkedAge2 = false;
+  String dropdownValue = 'One';
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      //AppBar
-      appBar: new AppBar(
-        title: new Text("BmiCalc"),
-        backgroundColor: Colors.red,
-        centerTitle: true,
-      ),
-
-      //Body
-      body: Center(
-        child: CheckboxListTile(
-          title: Text("title text"),
-          value: true,
-          onChanged: (newValue) {},
-          controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-        )
+    return Scaffold(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          children: <Widget>[
+            CheckboxListTile(
+              title: Text("Age ${_age1}"),
+              value: _checkedAge1,
+              onChanged: (age) {
+                setState(() {
+                  _checkedAge1 = age;
+                  if (_checkedAge1)
+                    _totalAge += _age1;
+                  else
+                    _totalAge -= _age1;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: Text("Age ${_age2}"),
+              value: _checkedAge2,
+              onChanged: (age) {
+                setState(() {
+                  _checkedAge2 = age;
+                  if (_checkedAge2)
+                    _totalAge += _age2;
+                  else
+                    _totalAge -= _age2;
+                });
+              },
+            ),
+            DropdownButton<String>(
+              value: dropdownValue,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValue = newValue;
+                });
+              },
+              items: <String>['One', 'Two', 'Free', 'Four']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            Text("Total age = ${dropdownValue}"),
+            Text("Total age = ${_totalAge}")
+          ],
+        ),
       ),
     );
   }
