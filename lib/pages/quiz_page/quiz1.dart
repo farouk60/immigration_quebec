@@ -51,181 +51,184 @@ class QubecEconomyState extends State<QubecEconomy> {
         onWillPop: () async => false,
         child: Scaffold(
 
-          body: new Container(
-            margin: const EdgeInsets.all(16.0),
-            alignment: Alignment.topCenter,
-            child: new Column(
-              children: <Widget>[
-                new Padding(padding: EdgeInsets.all(20.0)),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
 
-                new Container(
-                  alignment: Alignment.centerRight,
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: new SingleChildScrollView(
+
+              child: new Column(
+                children: <Widget>[
+                  new Padding(padding: EdgeInsets.all(10.0)),
+
+                  new Container(
+                    alignment: Alignment.centerRight,
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+
+                        new Text("Question ${questionNumber + 1} sur ${quiz.questions.length}",
+                          style: new TextStyle(
+                              fontSize: 22.0
+                          ),),
+
+                        new Text("Correct: $finalScore",
+                          style: new TextStyle(
+                              fontSize: 22.0
+                          ),)
+                      ],
+                    ),
+                  ),
+
+
+                  //image
+                  new Padding(padding: EdgeInsets.all(10.0)),
+
+                  new Image.asset(
+                    "images/${quiz.images[questionNumber]}.png",
+                  ),
+
+                  new Padding(padding: EdgeInsets.all(20.0)),
+
+                  new Text(quiz.questions[questionNumber],
+                    style: new TextStyle(
+                      fontSize: 20.0,
+                    ),),
+
+                  new Padding(padding: EdgeInsets.all(20.0)),
+
+                  new Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
 
-                      new Text("Question ${questionNumber + 1} sur ${quiz.questions.length}",
-                        style: new TextStyle(
-                            fontSize: 22.0
-                        ),),
+                      //button 1
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: new MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          minWidth: 120.0,
+                          color: Colors.blueGrey,
+                          onPressed: (){
+                            if(quiz.choices[questionNumber][0] == quiz.correctAnswers[questionNumber]){
+                              finalScore++;
+                            }else{
+                            }
+                            updateQuestion();
+                          },
+                          child: new Text(quiz.choices[questionNumber][0],
+                            style: new TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.white
+                            ),),
+                        ),
+                      ),
 
-                      new Text("Correct: $finalScore",
-                        style: new TextStyle(
-                            fontSize: 22.0
-                        ),)
+                      //button 2
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: new MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          minWidth: 120.0,
+                          color: Colors.blueGrey,
+                          onPressed: (){
+
+                            if(quiz.choices[questionNumber][1] == quiz.correctAnswers[questionNumber]){
+                              finalScore++;
+                            }else{
+                            }
+                            updateQuestion();
+                          },
+                          child: new Text(quiz.choices[questionNumber][1],
+                            style: new TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.white
+                            ),),
+                        ),
+                      ),
+
                     ],
                   ),
-                ),
 
+                  new Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
 
-                //image
-                new Padding(padding: EdgeInsets.all(10.0)),
+                      //button 3
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: new MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          minWidth: 120.0,
+                          color: Colors.blueGrey,
+                          onPressed: (){
 
-                new Image.asset(
-                  "images/${quiz.images[questionNumber]}.png",
-                ),
-
-                new Padding(padding: EdgeInsets.all(20.0)),
-
-                new Text(quiz.questions[questionNumber],
-                  style: new TextStyle(
-                    fontSize: 20.0,
-                  ),),
-
-                new Padding(padding: EdgeInsets.all(20.0)),
-
-                new Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-
-                    //button 1
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: new MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        minWidth: 120.0,
-                        color: Colors.blueGrey,
-                        onPressed: (){
-                          if(quiz.choices[questionNumber][0] == quiz.correctAnswers[questionNumber]){
-                            finalScore++;
-                          }else{
-                          }
-                          updateQuestion();
-                        },
-                        child: new Text(quiz.choices[questionNumber][0],
-                          style: new TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white
-                          ),),
+                            if(quiz.choices[questionNumber][2] == quiz.correctAnswers[questionNumber]){
+                              finalScore++;
+                            }else{
+                            }
+                            updateQuestion();
+                          },
+                          child: new Text(quiz.choices[questionNumber][2],
+                            style: new TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.white
+                            ),),
+                        ),
                       ),
-                    ),
 
-                    //button 2
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: new MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        minWidth: 120.0,
-                        color: Colors.blueGrey,
-                        onPressed: (){
+                      //button 4
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: new MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          minWidth: 120.0,
+                          color: Colors.blueGrey,
+                          onPressed: (){
 
-                          if(quiz.choices[questionNumber][1] == quiz.correctAnswers[questionNumber]){
-                            finalScore++;
-                          }else{
-                          }
-                          updateQuestion();
-                        },
-                        child: new Text(quiz.choices[questionNumber][1],
-                          style: new TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white
-                          ),),
+                            if(quiz.choices[questionNumber][3] == quiz.correctAnswers[questionNumber]){
+                              finalScore++;
+                            }else{
+                            }
+                            updateQuestion();
+                          },
+                          child: new Text(quiz.choices[questionNumber][3],
+                            style: new TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.white
+                            ),),
+                        ),
                       ),
-                    ),
 
-                  ],
-                ),
+                    ],
+                  ),
 
-                new Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
+                  new Padding(padding: EdgeInsets.all(10.0)),
 
-                    //button 3
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: new MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        minWidth: 120.0,
-                        color: Colors.blueGrey,
-                        onPressed: (){
-
-                          if(quiz.choices[questionNumber][2] == quiz.correctAnswers[questionNumber]){
-                            finalScore++;
-                          }else{
-                          }
-                          updateQuestion();
-                        },
-                        child: new Text(quiz.choices[questionNumber][2],
-                          style: new TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white
-                          ),),
-                      ),
-                    ),
-
-                    //button 4
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: new MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        minWidth: 120.0,
-                        color: Colors.blueGrey,
-                        onPressed: (){
-
-                          if(quiz.choices[questionNumber][3] == quiz.correctAnswers[questionNumber]){
-                            finalScore++;
-                          }else{
-                          }
-                          updateQuestion();
-                        },
-                        child: new Text(quiz.choices[questionNumber][3],
-                          style: new TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white
-                          ),),
-                      ),
-                    ),
-
-                  ],
-                ),
-
-                new Padding(padding: EdgeInsets.all(30.0)),
-
-                new Container(
-                    alignment: Alignment.bottomCenter,
-                    child:  new MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        minWidth: 240.0,
-                        height: 30.0,
-                        color: Colors.red,
-                        onPressed: resetQuiz,
-                        child: new Text("Quittez Quebec Quiz",
-                          style: new TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white
-                          ),)
-                    )
-                ),
+                  new Container(
+                      alignment: Alignment.bottomCenter,
+                      child:  new MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          minWidth: 240.0,
+                          height: 30.0,
+                          color: Colors.red,
+                          onPressed: resetQuiz,
+                          child: new Text("Quittez Quebec Quiz",
+                            style: new TextStyle(
+                                fontSize: 18.0,
+                                color: Colors.white
+                            ),)
+                      )
+                  ),
 
 
 
 
-              ],
+                ],
+              ),
             ),
           ),
 

@@ -29,22 +29,11 @@ class QuebecEconomy extends State<QuebecQuiz> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
                 height: 50.0,
-                color: Colors.green,
+                color: Colors.blueAccent,
                 elevation: 8,
                 onPressed: startQubecEconomyQuiz,
                 child: new Text(
-                  "Économie du Québec",
-                  style: new TextStyle(fontSize: 18.0, color: Colors.white),
-                )),
-            new MaterialButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                height: 50.0,
-                color: Colors.blue,
-                elevation: 8,
-                onPressed: startQubecPoliticQuiz,
-                child: new Text(
-                  "Politique du Québec",
+                  "Quize sur le Québec",
                   style: new TextStyle(fontSize: 18.0, color: Colors.white),
                 )),
           ],

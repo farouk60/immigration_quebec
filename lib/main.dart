@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:immigration_quebec/pages/general_information_page/informations_page.dart';
-import 'package:immigration_quebec/pages/quiz_page/copycalc.dart';
+import 'package:immigration_quebec/pages/calcul_chances_page/copycalc.dart';
 import 'package:immigration_quebec/pages/quiz_page/quiz_home_page.dart';
-import 'package:immigration_quebec/pages/quiz_page/testfarouk.dart';
-import 'package:immigration_quebec/pages/test.dart';
 import 'package:immigration_quebec/pages/youtube_page/youtube_home_page.dart';
 
 void main() => runApp(new MaterialApp(home: HomePage()));
@@ -13,16 +11,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: new Scaffold(
-        appBar: new AppBar(
-          title: new Center(
-            child: new Row(
-              children: <Widget>[
-                new Icon(Icons.home),
-                new Text('Guide Immigration Québec'),
-              ],
-            ),
-          ),
-        ),
         body: new Stack(
           children: <Widget>[
             new Container(
@@ -108,7 +96,7 @@ class HomePage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Demo()),
+                        MaterialPageRoute(builder: (context) => Calcul()),
                       );
                     },
                     child: Text("Calculator",

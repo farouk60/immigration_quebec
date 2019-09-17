@@ -1,529 +1,200 @@
 import 'package:flutter/material.dart';
-
-void main() => runApp(MaterialApp(
-  home: Calcul2(),
-));
-
-typedef ActionCallBack = void Function(Key key);
-typedef KeyCallBack = void Function(Key key);
-
-const Color primaryColor = const Color(0xff50E3C2);
-const Color keypadColor = const Color(0xff4A4A4A);
+import 'package:flutter/widgets.dart';
 
 
-class Calcul2 extends StatefulWidget {
-  _MyAppState createState() => _MyAppState();
+
+const Duration _kExpand = Duration(milliseconds: 200);
+
+/// A single-line [ListTile] with a trailing button that expands or collapses
+/// the tile to reveal or hide the [children].
+///
+/// This widget is typically used with [ListView] to create an
+/// "expand / collapse" list entry. When used with scrolling widgets like
+/// [ListView], a unique [PageStorageKey] must be specified to enable the
+/// [ExpansionTile] to save and restore its expanded state when it is scrolled
+/// in and out of view.
+///
+/// See also:
+///
+///  * [ListTile], useful for creating expansion tile [children] when the
+///    expansion tile represents a sublist.
+///  * The "Expand/collapse" section of
+///    <https://material.io/guidelines/components/lists-controls.html>.
+class ExpansionTile extends StatefulWidget {
+  /// Creates a single-line [ListTile] with a trailing button that expands or collapses
+  /// the tile to reveal or hide the [children]. The [initiallyExpanded] property must
+  /// be non-null.
+  const ExpansionTile({
+    Key key,
+    this.leading,
+    @required this.title,
+    this.backgroundColor,
+    this.onExpansionChanged,
+    this.children = const <Widget>[],
+    this.trailing,
+    this.initiallyExpanded = false,
+  }) : assert(initiallyExpanded != null),
+        super(key: key);
+
+  /// A widget to display before the title.
+  ///
+  /// Typically a [CircleAvatar] widget.
+  final Widget leading;
+
+  /// The primary content of the list item.
+  ///
+  /// Typically a [Text] widget.
+  final Widget title;
+
+  /// Called when the tile expands or collapses.
+  ///
+  /// When the tile starts expanding, this function is called with the value
+  /// true. When the tile starts collapsing, this function is called with
+  /// the value false.
+  final ValueChanged<bool> onExpansionChanged;
+
+  /// The widgets that are displayed when the tile expands.
+  ///
+  /// Typically [ListTile] widgets.
+  final List<Widget> children;
+
+  /// The color to display behind the sublist when expanded.
+  final Color backgroundColor;
+
+  /// A widget to display instead of a rotating arrow icon.
+  final Widget trailing;
+
+  /// Specifies if the list tile is initially expanded (true) or collapsed (false, the default).
+  final bool initiallyExpanded;
+
+  @override
+  _ExpansionTileState createState() => _ExpansionTileState();
 }
 
-class _MyAppState extends State<Calcul2> {
+class _ExpansionTileState extends State<ExpansionTile> with SingleTickerProviderStateMixin {
+  static final Animatable<double> _easeOutTween = CurveTween(curve: Curves.easeOut);
+  static final Animatable<double> _easeInTween = CurveTween(curve: Curves.easeIn);
+  static final Animatable<double> _halfTween = Tween<double>(begin: 0.0, end: 0.5);
 
-  Key _actionKey;
-  Key _plusKey = Key('plus');
-  Key _minusKey = Key('minus');
-  Key _multiplyKey = Key('multiply');
-  Key _divideKey = Key('divide');
-  Key _sevenKey = Key('seven');
-  Key _eightKey = Key('eight');
-  Key _nineKey = Key('nine');
-  Key _fourKey = Key('four');
-  Key _fiveKey = Key('five');
-  Key _sixKey = Key('six');
-  Key _oneKey = Key('one');
-  Key _twoKey = Key('two');
-  Key _threeKey = Key('three');
-  Key _dotKey = Key('dot');
-  Key _zeroKey = Key('zero');
-  Key _clearKey = Key('clear');
-  Key _allClearKey = Key('allclear');
-  Key _equalsKey = Key('equals');
+  final ColorTween _borderColorTween = ColorTween();
+  final ColorTween _headerColorTween = ColorTween();
+  final ColorTween _iconColorTween = ColorTween();
+  final ColorTween _backgroundColorTween = ColorTween();
 
-  var height;
-  var width;
-  List _currentValues = List();
-  double lastValue;
-  TextEditingController _textEditingController;
-  bool savedLastValue = false;
+  AnimationController _controller;
+  Animation<double> _iconTurns;
+  Animation<double> _heightFactor;
+  Animation<Color> _borderColor;
+  Animation<Color> _headerColor;
+  Animation<Color> _iconColor;
+  Animation<Color> _backgroundColor;
 
-  void onActionTapped(Key actionKey) {
-    setState(() {
-      _actionKey = actionKey;
+  bool _isExpanded = false;
 
-      if (_currentValues.isNotEmpty) {
-        lastValue = double.parse(convertToString(_currentValues));
-      }
-    });
-  }
-
-  void onKeyTapped(Key key) {
-
-    if (savedLastValue == false && lastValue != null) {
-      _currentValues.clear();
-      savedLastValue = true;
-    }
-    setState(() {
-      if (identical(_sevenKey, key)) {
-        _currentValues.add('7');
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_eightKey, key)) {
-        _currentValues.add('8');
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_nineKey, key)) {
-        _currentValues.add('9');
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_fourKey, key)) {
-        _currentValues.add('4');
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_fiveKey, key)) {
-        _currentValues.add('5');
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_sixKey, key)) {
-        _currentValues.add('6');
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_oneKey, key)) {
-        _currentValues.add('1');
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_twoKey, key)) {
-        _currentValues.add('2');
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_threeKey, key)) {
-        _currentValues.add('3');
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_dotKey, key)) {
-        if (!_currentValues.contains('.')) {
-          _currentValues.add('.');
-        }
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_zeroKey, key)) {
-        _currentValues.add('0');
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_clearKey, key)) {
-        print('Values :: $_currentValues');
-        _currentValues.removeLast();
-        _textEditingController.text = convertToString(_currentValues);
-      } else if(identical(_allClearKey, key)) {
-        _currentValues.clear();
-        lastValue = null;
-        savedLastValue = false;
-        _textEditingController.clear();
-      } else if (identical(_equalsKey, key)) {
-        calculateValue();
-        savedLastValue = false;
-      }
-    });
-  }
-
-  String validateDouble(double doubleValue) {
-    int value;
-    if (doubleValue % 1 == 0) {
-      value = doubleValue.toInt();
-    } else {
-      return doubleValue.toStringAsFixed(1);
-    }
-    return value.toString();
-  }
-
-  void calculateValue() {
-    String value;
-    double doubleValue;
-    if (identical(_actionKey, _plusKey)){
-      doubleValue = Math.add(lastValue, double.parse(convertToString(_currentValues)));
-      value = validateDouble(doubleValue);
-      print('Value after conversion : $value');
-      _currentValues.clear();
-      _currentValues = convertToList(value);
-      _actionKey = null;
-      setState(() {
-        _textEditingController.text = value;
-      });
-    } else if (identical(_actionKey, _minusKey)) {
-      doubleValue = Math.subtract(lastValue, double.parse(convertToString(_currentValues)));
-      value = validateDouble(doubleValue);
-      _currentValues.clear();
-      _currentValues = convertToList(value);
-      _actionKey = null;
-      setState(() {
-        _textEditingController.text = value;
-      });
-    } else if (identical(_actionKey, _multiplyKey)) {
-      doubleValue = Math.multiply(lastValue, double.parse(convertToString(_currentValues)));
-      value = validateDouble(doubleValue);
-      _currentValues.clear();
-      _currentValues = convertToList(value);
-      _actionKey = null;
-      setState(() {
-        _textEditingController.text = value;
-      });
-    } else if (identical(_actionKey, _divideKey)) {
-      doubleValue = Math.divide(lastValue, double.parse(convertToString(_currentValues)));
-      value = validateDouble(doubleValue);
-      _currentValues.clear();
-      _currentValues = convertToList(value);
-      _actionKey = null;
-      setState(() {
-        _textEditingController.text = value;
-      });
-    }
-  }
-
-  String convertToString(List values) {
-    String val = '';
-    print(_currentValues);
-    for (int i = 0;i < values.length;i++) {
-      val+=_currentValues[i];
-    }
-    return val;
-  }
-
-  List convertToList(String value) {
-    List list = new List();
-    for(int i = 0;i < value.length;i++) {
-      list.add(String.fromCharCode(value.codeUnitAt(i)));
-    }
-    return list;
-  }
-
+  @override
   void initState() {
     super.initState();
-    _textEditingController = TextEditingController();
+    _controller = AnimationController(duration: _kExpand, vsync: this);
+    _heightFactor = _controller.drive(_easeInTween);
+    _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
+    _borderColor = _controller.drive(_borderColorTween.chain(_easeOutTween));
+    _headerColor = _controller.drive(_headerColorTween.chain(_easeInTween));
+    _iconColor = _controller.drive(_iconColorTween.chain(_easeInTween));
+    _backgroundColor = _controller.drive(_backgroundColorTween.chain(_easeOutTween));
+
+    _isExpanded = PageStorage.of(context)?.readState(context) ?? widget.initiallyExpanded;
+    if (_isExpanded)
+      _controller.value = 1.0;
   }
 
   @override
-  Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
-    debugPrint('Width :: $width and Height :: $height');
-    return Scaffold(
-      backgroundColor: primaryColor,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _handleTap() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+      if (_isExpanded) {
+        _controller.forward();
+      } else {
+        _controller.reverse().then<void>((void value) {
+          if (!mounted)
+            return;
+          setState(() {
+            // Rebuild without widget.children.
+          });
+        });
+      }
+      PageStorage.of(context)?.writeState(context, _isExpanded);
+    });
+    if (widget.onExpansionChanged != null)
+      widget.onExpansionChanged(_isExpanded);
+  }
+
+  Widget _buildChildren(BuildContext context, Widget child) {
+    final Color borderSideColor = _borderColor.value ?? Colors.transparent;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: _backgroundColor.value ?? Colors.transparent,
+        border: Border(
+          top: BorderSide(color: borderSideColor),
+          bottom: BorderSide(color: borderSideColor),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Container(
-            alignment: Alignment.bottomRight,
-            width: width,
-            height: (height/100)*20,
-            child: IgnorePointer(
-              child: TextField(
-                enabled: true,
-                autofocus: true,
-                controller: _textEditingController,
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  fontFamily: 'Avenir',
-                  fontStyle: FontStyle.normal,
-                  color: Colors.white,
-                  fontSize: 60.0,
-                ),
-                decoration: InputDecoration.collapsed(
-                    hintText: '0',
-                    hintStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 60.0
-                    )
-                ),              ),
-            ),
-          ),
-          Row(
-            children: <Widget>[
-              buildActionButton('+', _plusKey),
-              buildActionButton('-', _minusKey),
-              buildActionButton('x', _multiplyKey),
-              buildActionButton('/', _divideKey)
-            ],
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(30.0),
-              color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        buildKeyItem('7', _sevenKey),
-                        buildKeyItem('8',_eightKey),
-                        buildKeyItem('9',_nineKey),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        buildKeyItem('4',_fourKey),
-                        buildKeyItem('5',_fiveKey),
-                        buildKeyItem('6',_sixKey),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        buildKeyItem('1',_oneKey),
-                        buildKeyItem('2',_twoKey),
-                        buildKeyItem('3',_threeKey),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        buildKeyItem('.',_dotKey),
-                        buildKeyItem('0',_zeroKey),
-                        KeyItem(
-                          key: _clearKey,
-                          child: Icon(
-                            Icons.backspace,
-                            size: 40,
-                            color: keypadColor,
-                          ),
-                          onKeyTap: onKeyTapped,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        buildKeyItem('ac',_allClearKey),
-                        buildKeyItem(' ',Key('')),
-                        KeyItem(
-                          key: _equalsKey,
-                          onKeyTap: onKeyTapped,
-                          child: Text(
-                            '=',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 80.0,
-                                shadows: [
-                                  BoxShadow(
-                                      blurRadius: 20.0,
-                                      color: primaryColor,
-                                      spreadRadius: 30.0
-                                  )
-                                ]
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
+          ListTileTheme.merge(
+            iconColor: _iconColor.value,
+            textColor: _headerColor.value,
+            child: ListTile(
+              onTap: _handleTap,
+              leading: widget.leading,
+              title: widget.title,
+              trailing: widget.trailing ?? RotationTransition(
+                turns: _iconTurns,
+                child: const Icon(Icons.expand_more),
               ),
             ),
-          )
+          ),
+          ClipRect(
+            child: Align(
+              heightFactor: _heightFactor.value,
+              child: child,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  ActionButton buildActionButton(String name , Key key) {
-    return ActionButton(
-      key: key,
-      actionName: name,
-      onTapped: onActionTapped,
-      enabled: identical(_actionKey, key) ? true : false,
-      padding: height > 600 ? EdgeInsets.all(10.0) : EdgeInsets.all(0.0),
-    );
+  @override
+  void didChangeDependencies() {
+    final ThemeData theme = Theme.of(context);
+    _borderColorTween
+      ..end = theme.dividerColor;
+    _headerColorTween
+      ..begin = theme.textTheme.subhead.color
+      ..end = theme.accentColor;
+    _iconColorTween
+      ..begin = theme.unselectedWidgetColor
+      ..end = theme.accentColor;
+    _backgroundColorTween
+      ..end = widget.backgroundColor;
+    super.didChangeDependencies();
   }
-
-  KeyItem buildKeyItem(String val, Key key) {
-    return KeyItem(
-      key: key,
-      child: Text(
-        val,
-        style: TextStyle(
-          color: keypadColor,
-          fontFamily: 'Avenir',
-          fontStyle: FontStyle.normal,
-          fontSize: 50.0,
-        ),
-      ),
-      onKeyTap: onKeyTapped,
-    );
-  }
-}
-
-
-class ActionButton extends StatelessWidget {
-
-  final Color defaultBackground = Colors.transparent;
-  final Color defaultForeground = primaryColor;
-  final Color changedBackground = primaryColor;
-  final Color changedForeground = Colors.white;
-
-  final String actionName;
-  final bool enabled;
-  final ActionCallBack onTapped;
-  final Key key;
-  final EdgeInsets padding;
-
-  ActionButton({@required this.actionName,this.onTapped,this.enabled,this.key,this.padding}) : super(key : key);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        alignment: Alignment.center,
-        padding: padding ?? EdgeInsets.all(0.0),
-        color: Color(0xffF6F6F6),
-        child: GestureDetector(
-          onTap: () {
-            onTapped(key);
-          },
-          child: CircleAvatar(
-            backgroundColor: enabled ? changedBackground : defaultBackground,
-            radius: 30,
-            child: Text(
-              actionName,
-              style: TextStyle(
-                  color: enabled ? changedForeground : defaultForeground,
-                  fontSize: 40.0,
-                  fontFamily: 'Avenir',
-                  fontWeight: FontWeight.bold
-              ),
-            ),
-          ),
-        ),
-      ),
+    final bool closed = !_isExpanded && _controller.isDismissed;
+    return AnimatedBuilder(
+      animation: _controller.view,
+      builder: _buildChildren,
+      child: closed ? null : Column(children: widget.children),
     );
-  }
 
-}
-
-class KeyItem extends StatelessWidget {
-
-  final Widget child;
-  final Key key;
-  final KeyCallBack onKeyTap;
-
-  KeyItem({@required this.child,this.key,this.onKeyTap});
-
-  @override
-  Widget build(BuildContext context) {
-    assert(debugCheckHasMaterial(context));
-    return Expanded(
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkResponse(
-          splashColor: primaryColor,
-          highlightColor: Colors.white,
-          onTap: () => onKeyTap(key),
-          child: Container(
-            //color: Colors.white,
-            alignment: Alignment.center,
-            child: child,
-          ),
-        ),
-      ),
-    );
   }
 }
-
-class Math {
-
-  static double add(double val1, val2) {
-    return val1+val2;
-  }
-
-  static double subtract(double val1,val2) {
-    return val1 - val2;
-  }
-
-  static double multiply(double val1, double val2) {
-    return val1*val2;
-  }
-
-  static double divide(double val1, double val2) {
-    return val1/val2;
-  }
-}
-
-//import 'package:direct_select/direct_select.dart';
-//import 'package:flutter/material.dart';
-//
-//class Calcul extends StatefulWidget {
-//  @override
-//  State<StatefulWidget> createState() {
-//    return new CalculState();
-//  }
-//}
-//
-//class CalculState extends State<Calcul> {
-//  final TextEditingController _ageController = new TextEditingController();
-//  final TextEditingController _weightController = new TextEditingController();
-//  final TextEditingController _heightController = new TextEditingController();
-//  double _meter = 0;
-//  double _result = 0;
-//  String _finalResultPrint = "";
-//  String _doneResult = "";
-//  bool _isChecked = true;
-//  void _clear() {
-//    setState(() {
-//      _ageController.clear();
-//      _weightController.clear();
-//      _heightController.clear();
-//    });
-//  }
-//
-//  void _bmiValue() {
-//    setState(() {
-//      double age = double.parse(_ageController.text);
-//      double weight = double.parse(_weightController.text);
-//      double height = double.parse(_heightController.text);
-//      _meter = height + weight + age;
-//
-//      if ((_ageController.text.isNotEmpty || age > 0) &&
-//          ((_heightController.text.isNotEmpty || height > 0) &&
-//              (_weightController.text.isNotEmpty || weight > 0))) {
-//        _result = _meter;
-//      } else {
-//        print("Error");
-//      }
-//
-//      if ((double.parse(_result.toStringAsFixed(1)) < 18.5)) {
-//        _finalResultPrint = "UnderWeight";
-//        print(_finalResultPrint);
-//      } else if (double.parse(_result.toStringAsFixed(1)) > 18.5 &&
-//          (double.parse(_result.toStringAsFixed(1)) <= 25.0)) {
-//        _finalResultPrint = "Normal";
-//        print(_finalResultPrint);
-//      } else if ((double.parse(_result.toStringAsFixed(1)) > 25.0) &&
-//          (double.parse(_result.toStringAsFixed(1))) < 30.0) {
-//        _finalResultPrint = "OverWeight";
-//        print(_finalResultPrint);
-//      } else if ((double.parse(_result.toStringAsFixed(1))) >= 30.0) {
-//        _finalResultPrint = "Obesity";
-//        print(_finalResultPrint);
-//      }
-//    });
-//
-//    _doneResult = "Your BMI is ${_result.toStringAsFixed(1)}";
-//  }
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return new Scaffold(
-//      //AppBar
-//      appBar: new AppBar(
-//        title: new Text("BmiCalc"),
-//        backgroundColor: Colors.red,
-//        centerTitle: true,
-//      ),
-//
-//      //Body
-//      body: Center(
-//        child: CheckboxListTile(
-//          value: _isChecked,
-//          onChanged: (bool val) => setState(() => _isChecked = val),
-//          title: Text("CheckBox Text"),
-//          controlAffinity: ListTileControlAffinity.trailing,
-//        ),
-//      ),
-//    );
-//  }
-//}
