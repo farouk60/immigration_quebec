@@ -2,7 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immigration_quebec/pages/quiz_page/quiz1.dart';
-import 'package:immigration_quebec/pages/quiz_page/quiz2.dart';
 
 class QuebecQuiz extends StatefulWidget {
   @override
@@ -48,11 +47,6 @@ class QuebecEconomy extends State<QuebecQuiz> {
           context, new MaterialPageRoute(builder: (context) => new QubecEconomy()));
     });
   }
-  void startQubecPoliticQuiz() {
-    setState(() {
-      Navigator.push(
-          context, new MaterialPageRoute(builder: (context) => new QubecPolitic()));
-    });
-  }
+  
 
 }

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "10415978709",
+    "firebase_url": "https://guide-immigration-quebec.firebaseio.com",
+    "project_id": "guide-immigration-quebec",
+    "storage_bucket": "guide-immigration-quebec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10415978709:android:58e63497360886f3754a5c",
+        "android_client_info": {
+          "package_name": "com.frahem.immigrationquebec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10415978709-36j68ohn4d502immakv8vcd7c71sbimn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.frahem.immigrationquebec",
+            "certificate_hash": "b8b2ca93957726b20a723d2fe00075c8d0908f6d"
+          }
+        },
+        {
+          "client_id": "10415978709-8pqnm5h9dkqcaos3c8d3mtsfq6rd0dhk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA__Pgwz7gKneLDjsNhfXdc5MWZ0uAG8ws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10415978709-8pqnm5h9dkqcaos3c8d3mtsfq6rd0dhk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "10415978709-d2t49c1o1nrphjdhv1qatiqdei8chteg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.faroukrahem.immigrationquebec"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
