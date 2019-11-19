@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:immigration_quebec/pages/chat_page/login.dart';
 import 'package:immigration_quebec/pages/general_information_page/informations_page.dart';
 import 'package:immigration_quebec/pages/calcul_chances_page/copycalc.dart';
 import 'package:immigration_quebec/pages/quiz_page/quiz_home_page.dart';
@@ -85,38 +84,6 @@ class HomePage extends StatelessWidget {
                       );
                     },
                     child: Text("Videos",
-                        style: TextStyle(fontSize: 20.0, color: Colors.white)),
-                  ),
-                ),
-                Center(
-                  child: new MaterialButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    splashColor: Colors.red,
-                    color: Colors.blue[400],
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Calcul()),
-                      );
-                    },
-                    child: Text("Calculator",
-                        style: TextStyle(fontSize: 20.0, color: Colors.white)),
-                  ),
-                ),
-                Center(
-                  child: new MaterialButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    splashColor: Colors.red,
-                    color: Colors.blue[400],
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MyChatApp()),
-                      );
-                    },
-                    child: Text("Chat",
                         style: TextStyle(fontSize: 20.0, color: Colors.white)),
                   ),
                 ),
